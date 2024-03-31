@@ -13,7 +13,6 @@ import humidity_icon from '../Assets/humidity.png';
 const WeatherApp = () => {
     const api_key = "974a5fb10ece1c27809438a04b1b2769";
 
-    // Initialize state for weather data and icon
     const [weather, setWeather] = useState({
         humidity: '',
         wind: '',
@@ -22,7 +21,7 @@ const WeatherApp = () => {
         icon: clear_icon // Default icon
     });
 
-    // Function to set the weather icon
+
     const setWeatherIcon = (iconCode) => {
         if (iconCode === "01d" || iconCode === "01n") {
             return clear_icon;
@@ -55,17 +54,15 @@ const WeatherApp = () => {
             const response = await fetch(url);
             const data = await response.json();
 
-            // Update the state with the new weather data and icon
             setWeather({
                 humidity: `${data.main.humidity}%`,
                 wind: `${Math.floor(data.wind.speed)} mph`,
                 temp: `${Math.floor(data.main.temp)}`,
                 location: data.name,
-                icon: setWeatherIcon(data.weather[0].icon) // Update the icon based on the weather code
+                icon: setWeatherIcon(data.weather[0].icon) 
             });
         } catch (error) {
             console.error("Error fetching weather data: ", error);
-            // Handle the error appropriately
         }
     };
 
