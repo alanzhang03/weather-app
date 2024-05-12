@@ -18,7 +18,7 @@ const WeatherApp = () => {
         wind: '',
         temp: '',
         location: '',
-        icon: clear_icon // Default icon
+        icon: clear_icon 
     });
 
 
