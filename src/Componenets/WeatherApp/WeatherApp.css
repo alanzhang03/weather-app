@@ -23,7 +23,7 @@ body {
 }
 
 .clear-bg {
-	background: linear-gradient(to bottom, #add8e6, #ffffff);
+	background: linear-gradient(to bottom, #82c4da, #ffffff);
 }
 
 .cloudy-bg {
@@ -112,4 +112,34 @@ body {
 	font-size: 14px;
 	color: red;
 	margin: 10px 0;
+}
+
+.store-data-button-container {
+	padding-top: 5vh;
+}
+
+.store-data-button {
+	border-radius: 10px;
+	height: 3vh;
+	width: 5vw;
+	border: 1px black solid;
+	transition: 0.3s;
+}
+
+.store-data-button:hover {
+	transform: scale(1.1);
+	cursor: pointer;
+}
+
+.home-icon {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font-size: 24px;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+}
+
+.home-icon:hover {
+	transform: scale(1.2);
 }
