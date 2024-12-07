@@ -11,7 +11,7 @@ import wind_icon from "../Assets/wind.png";
 import humidity_icon from "../Assets/humidity.png";
 
 const WeatherApp = () => {
-	const api_key = "974a5fb10ece1c27809438a04b1b2769";
+	const api_key = process.env.REACT_APP_WEATHER_API_KEY;
 
 	const [input, setInput] = useState("");
 	const [weather, setWeather] = useState({
@@ -24,6 +24,8 @@ const WeatherApp = () => {
 	const [background, setBackground] = useState("clear-bg");
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
+	const [storedWeather, setStoredWeather] = useState([]);
+	const [isViewingStoredData, setIsViewingStoredData] = useState(false);
 
 	const resetToHome = () => {
 		setInput("");
@@ -99,58 +101,167 @@ const WeatherApp = () => {
 		}
 	};
 
+	const storeWeatherData = async () => {
+		try {
+			const response = await fetch("http://localhost:4000/storeWeather", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(weather),
+			});
+			const result = await response.json();
+			alert(result.message);
+		} catch (error) {
+			console.error("Error storing weather data:", error);
+			alert("Failed to store weather data.");
+		}
+	};
+
+	const fetchStoredWeather = async () => {
+		try {
+			console.log("Fetching stored weather data...");
+			const response = await fetch("http://localhost:4000/getWeather");
+			const data = await response.json();
+			console.log("Fetched Stored Weather Data:", data);
+			setStoredWeather(data);
+			setIsViewingStoredData(true);
+		} catch (error) {
+			console.error("Error fetching stored weather data:", error);
+			alert("Failed to fetch stored weather data.");
+		}
+	};
+
+	const resetWeatherData = async () => {
+		try {
+			const response = await fetch("http://localhost:4000/resetWeather", {
+				method: "DELETE",
+			});
+			const result = await response.json();
+			alert(result.message);
+			setStoredWeather([]);
+		} catch (error) {
+			console.error("Error resetting stored weather data:", error);
+			alert("Failed to reset stored weather data.");
+		}
+	};
+
+	const resetToSearchView = () => {
+		setIsViewingStoredData(false);
+	};
+
 	return (
 		<>
 			<div className="home-icon" onClick={resetToHome}>
 				🏠
 			</div>
 			<div className={`container ${background}`}>
-				<div className="top-bar">
-					<input
-						type="text"
-						className="cityInput"
-						placeholder="Enter city name..."
-						value={input}
-						onChange={(e) => setInput(e.target.value)}
-					/>
-					<div className="search-icon" onClick={search}>
-						<img src={search_icon} alt="Search Icon" />
+				{isViewingStoredData ? (
+					<div className="stored-data">
+						<h2>Stored Weather Data</h2>
+						<button
+							onClick={resetToSearchView}
+							className="back-to-search-button"
+						>
+							Go Back
+						</button>
+						{storedWeather.length > 0 ? (
+							storedWeather.map((item, index) => (
+								<div key={index} className="stored-item">
+									<h3 className="stored-item-location">{item.location}</h3>
+									<p>
+										<strong>Temperature:</strong> {item.temp}
+									</p>
+									<p>
+										<strong>Humidity:</strong> {item.humidity}
+									</p>
+									<p>
+										<strong>Wind Speed:</strong> {item.wind}
+									</p>
+									<hr />
+								</div>
+							))
+						) : (
+							<p>No weather found.</p>
+						)}
 					</div>
-				</div>
-				{isLoading ? (
-					<div className="loading">Fetching weather data...</div>
-				) : error ? (
-					<div className="error">{error}</div>
 				) : (
 					<>
-						<div className="weather-img">
-							<center>
-								<img src={weather.icon} alt="Weather Icon" />
-							</center>
-						</div>
-						<div className="weather-temp">{weather.temp}°F</div>
-						<div className="weather-location">{weather.location}</div>
-						<div className="data-container">
-							<div className="element">
-								<img src={humidity_icon} alt="Humidity Icon" className="icon" />
-								<div className="data">
-									<div className="humidity-percentage">{weather.humidity}</div>
-									<div className="label">Humidity</div>
-								</div>
+						<div className="top-bar">
+							<input
+								type="text"
+								className="cityInput"
+								placeholder="Enter city name..."
+								value={input}
+								onChange={(e) => setInput(e.target.value)}
+							/>
+							<div className="search-icon" onClick={search}>
+								<img src={search_icon} alt="Search Icon" />
 							</div>
-							<div className="element">
-								<img src={wind_icon} alt="Wind Icon" className="icon" />
-								<div className="data">
-									<div className="wind-rate">{weather.wind}</div>
-									<div className="label">Wind Speed</div>
+						</div>
+						{isLoading ? (
+							<div className="loading">Fetching weather data...</div>
+						) : error ? (
+							<div className="error">{error}</div>
+						) : (
+							<>
+								<div className="weather-img">
+									<center>
+										<img src={weather.icon} alt="Weather Icon" />
+									</center>
 								</div>
+								<div className="weather-temp">{weather.temp}°F</div>
+								<div className="weather-location">{weather.location}</div>
+								<div className="data-container">
+									<div className="element">
+										<img
+											src={humidity_icon}
+											alt="Humidity Icon"
+											className="icon"
+										/>
+										<div className="data">
+											<div className="humidity-percentage">
+												{weather.humidity}
+											</div>
+											<div className="label">Humidity</div>
+										</div>
+									</div>
+									<div className="element">
+										<img src={wind_icon} alt="Wind Icon" className="icon" />
+										<div className="data">
+											<div className="wind-rate">{weather.wind}</div>
+											<div className="label">Wind Speed</div>
+										</div>
+									</div>
+								</div>
+							</>
+						)}
+						<div className="both-buttons-container">
+							<div className="store-data-button-container">
+								<button
+									className="store-data-button"
+									onClick={storeWeatherData}
+								>
+									Store Data
+								</button>
+							</div>
+							<div className="view-stored-data-button-container">
+								<button
+									className="view-stored-data-button"
+									onClick={fetchStoredWeather}
+								>
+									View Stored Data
+								</button>
+							</div>
+							<div className="reset-data-button-container">
+								<button
+									className="reset-data-button"
+									onClick={resetWeatherData}
+								>
+									Reset Data
+								</button>
 							</div>
 						</div>
 					</>
 				)}
-				<div className="store-data-button-container">
-					<button className="store-data-button">Store Data</button>
-				</div>
 			</div>
 		</>
 	);
