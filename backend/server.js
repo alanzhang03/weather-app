@@ -31,7 +31,6 @@ app.post("/storeWeather", async (req, res) => {
 
 		const result = await collection.insertOne(req.body);
 
-
 		res.status(200).json({ message: "Weather data stored successfully" });
 	} catch (error) {
 		console.error("Error storing weather data:", error);
@@ -77,6 +76,7 @@ app.delete("/resetWeather", async (req, res) => {
 });
 
 app.listen(port, () => {
+	console.log(`Server running on http://localhost:${port}`);
 	if (
 		!MONGO_DB_USERNAME ||
 		!MONGO_DB_PASSWORD ||
