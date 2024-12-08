@@ -186,6 +186,7 @@ const WeatherApp = () => {
 				) : (
 					<>
 						<div className="top-bar">
+							<form>
 							<input
 								type="text"
 								className="cityInput"
@@ -193,6 +194,7 @@ const WeatherApp = () => {
 								value={input}
 								onChange={(e) => setInput(e.target.value)}
 							/>
+							</form>
 							<div className="search-icon" onClick={search}>
 								<img src={search_icon} alt="Search Icon" />
 							</div>
