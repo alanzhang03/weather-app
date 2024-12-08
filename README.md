@@ -4,7 +4,7 @@
 
 **App Description:** An app that allows users to retrieve and store weather conditions of any city in the world.
 
-**YouTube Video Link:**
+**YouTube Video Link:** https://youtu.be/uEyx2W5eRnQ
 
 **APIs:**
 
