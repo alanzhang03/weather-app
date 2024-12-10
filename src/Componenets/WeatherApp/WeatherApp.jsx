@@ -103,11 +103,14 @@ const WeatherApp = () => {
 
 	const storeWeatherData = async () => {
 		try {
-			const response = await fetch("http://localhost:4000/storeWeather", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(weather),
-			});
+			const response = await fetch(
+				"https://weather-app-98xc.onrender.com/storeWeather",
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(weather),
+				}
+			);
 			const result = await response.json();
 			alert(result.message);
 		} catch (error) {
@@ -119,7 +122,9 @@ const WeatherApp = () => {
 	const fetchStoredWeather = async () => {
 		try {
 			console.log("Fetching stored weather data...");
-			const response = await fetch("http://localhost:4000/getWeather");
+			const response = await fetch(
+				"https://weather-app-98xc.onrender.com/getWeather"
+			);
 			const data = await response.json();
 			console.log("Fetched Stored Weather Data:", data);
 			setStoredWeather(data);
@@ -132,9 +137,12 @@ const WeatherApp = () => {
 
 	const resetWeatherData = async () => {
 		try {
-			const response = await fetch("http://localhost:4000/resetWeather", {
-				method: "DELETE",
-			});
+			const response = await fetch(
+				"https://weather-app-98xc.onrender.com/resetWeather",
+				{
+					method: "DELETE",
+				}
+			);
 			const result = await response.json();
 			alert(result.message);
 			setStoredWeather([]);
@@ -187,13 +195,13 @@ const WeatherApp = () => {
 					<>
 						<div className="top-bar">
 							<form>
-							<input
-								type="text"
-								className="cityInput"
-								placeholder="Enter city name..."
-								value={input}
-								onChange={(e) => setInput(e.target.value)}
-							/>
+								<input
+									type="text"
+									className="cityInput"
+									placeholder="Enter city name..."
+									value={input}
+									onChange={(e) => setInput(e.target.value)}
+								/>
 							</form>
 							<div className="search-icon" onClick={search}>
 								<img src={search_icon} alt="Search Icon" />
