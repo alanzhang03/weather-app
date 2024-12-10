@@ -1,6 +1,6 @@
 **Submitted By:** 
 
-**Group Members:** Ammar Khawaja (akhawaj2), Alan Zhang (azhang3)
+**Group Members:** Ammar Khawaja (akhawaj2), Alan Zhang (azhang3), Alex Hamilton (ahammy04)
 
 **App Description:** An app that allows users to retrieve and store weather conditions of any city in the world.
 
