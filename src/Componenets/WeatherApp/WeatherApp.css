@@ -20,7 +20,7 @@ body {
 }
 
 .clear-bg {
-	background: linear-gradient(to bottom, #82c4da, #ffffff);
+	background: linear-gradient(to bottom, #82c4da, #c4e1e9);
 }
 
 .cloudy-bg {
@@ -98,7 +98,7 @@ body {
 
 .label {
 	font-size: 12px;
-	color: #666;
+	font-weight: bolder;
 }
 
 .loading {
