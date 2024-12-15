@@ -1,4 +1,4 @@
-**Submitted By:** 
+**Submitted By:** Alex Hamilton (ahammy04)
 
 **Group Members:** Ammar Khawaja (akhawaj2), Alan Zhang (azhang3), Alex Hamilton (ahammy04)
 
@@ -9,3 +9,5 @@
 **APIs:** OpenWeather https://openweathermap.org/ 
 
 **Contact Email**: azhang3@terpmail.umd.edu
+
+**Website Link**: https://weatherapp-7fu2.onrender.com/
